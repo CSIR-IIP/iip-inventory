@@ -15,7 +15,7 @@
     "@vitejs/plugin-react": "latest",
     "concurrently": "latest",
     "firebase": "^13.4.0",
-    "firebase-admin": "^14.5.1",
+    "firebase-admin": "13.10.0",
     "lucide-react": "latest",
     "react": "latest",
     "react-dom": "latest",
