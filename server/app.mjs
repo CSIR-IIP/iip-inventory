@@ -92,7 +92,6 @@ export function createHandler({ getServices }) {
 
   return async function handler(req, res) {
     try {
-      
       const requestUrl = new URL(req.url, 'http://localhost');
       let path = requestUrl.pathname.replace(/\/+$/, '') || '/';
       
