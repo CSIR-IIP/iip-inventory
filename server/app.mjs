@@ -94,14 +94,13 @@ export function createHandler({ getServices }) {
     try {
       const requestUrl = new URL(req.url, 'http://localhost');
       let path = requestUrl.pathname.replace(/\/+$/, '') || '/';
-      
-      // Vercel catch-all routes expose matched segments as req.query['...path'].
-      const catchAllPath = req.query?.['...path'];
-      if (Array.isArray(catchAllPath) && catchAllPath.length > 0) {
-        path = `/api/${catchAllPath.map(String).join('/')}`;
-      }
-      else if (typeof catchAllPath === 'string' && catchAllPath.length > 0) {
-        path = `/api/${catchAllPath}`;
+
+      // Vercel rewrite forwards the original API path in the route query parameter.
+      const routePath = req.query?.route ?? requestUrl.searchParams.get('route');
+      if (Array.isArray(routePath) && routePath.length > 0) {
+        path = `/api/${routePath.map(String).join('/')}`;
+      } else if (typeof routePath === 'string' && routePath.length > 0) {
+        path = `/api/${routePath}`;
       }
       const method = req.method;
       if (method === 'OPTIONS') { res.writeHead(204, securityHeaders); return res.end(); }
